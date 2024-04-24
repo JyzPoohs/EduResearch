@@ -3,7 +3,7 @@
 2. If use XAMPP, install Composer: https://getcomposer.org/download/
 
 ## Installation
-1. git clone
+1. git clone https://github.com/JyzPoohs/EduResearch.git
 2. In  terminal run `composer install`
 4. Copy `.env.example` to `.env`
 5. Update 'DB_PASSWORD' in .env file, if you set password for SQL.
