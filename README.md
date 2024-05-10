@@ -13,6 +13,14 @@
 8. Start XAMPP Apache
 9. Run `php artisan serve` and open the provided link
 
+### Git command 
+1. To update the code (if others gt updates ), type "git pull"
+2. To update ur code to Github, first type "git add ." (gt space after add)
+3. git commit -m "message" (replace ur comment for message)
+4. git push
+
+!!! Always update ur code from repo first before u push urs. 
+
 ### Admin: 
 - email: admin@softui.com
 - password: secret
