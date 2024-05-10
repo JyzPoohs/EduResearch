@@ -10,14 +10,14 @@
 5. Update 'DB_PASSWORD' in .env file, if you set password for SQL.
 6. In  terminal run `php artisan key:generate`
 7. Run `php artisan migrate --seed` to create the database tables and seed the roles and users tables
-8. Start XAMPP Apache
+8. Start XAMPP Apache & SQL/Laragon
 9. Run `php artisan serve` and open the provided link
 
 ### Git command 
-1. To update the code (if others gt updates ), type "git pull"
-2. To update ur code to Github, first type "git add ." (gt space after add)
-3. git commit -m "message" (replace ur comment for message)
-4. git push
+1. To update the code (if others gt updates ), type `git pull`
+2. To update ur code to Github, first type `git add .` (gt space after add)
+3. `git commit -m "message"` (replace ur comment for message)
+4. `git push`
 
 !!! Always update ur code from repo first before u push urs. 
 
