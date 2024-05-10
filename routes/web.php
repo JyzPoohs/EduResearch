@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -66,3 +68,24 @@ Route::group(['middleware' => 'guest'], function () {
 Route::get('/login', function () {
     return view('session/login-session');
 })->name('login');
+
+
+
+//complaint module
+Route::get('/feedbacklist', [FeedbackController::class, 'index'])->name('feedbacklist');
+
+Route::get('/Student/feedback',[FeedbackController::class,'index']);
+Route::get('/Student/newApplication',[FeedbackController::class,'newApplication']);
+Route::get('/viewFeedback/{id}',[FeedbackController::class,'viewFeedback']);
+Route::get('/Student/updateFeedbacks/{id}',[FeedbackController::class,'updateFeedbacks']);
+Route::post('/Student/addFeedback',[FeedbackController::class,'addFeedback']);
+Route::post('/Student/updateFeedback',[FeedbackController::class,'updateFeedback']);
+Route::get('/Student/deleteFeedback/{id}',[FeedbackController::class,'deleteFeedback']);
+
+Route::get('/Lecturer/feedback',[FeedbackController::class,'LecturerFeedback'])->name('Lecturerfeedbacklist');
+Route::post('/Lecturer/addFeedback',[FeedbackController::class,'addFeedback']);
+Route::post('/Lecturer/updateFeedback',[FeedbackController::class,'updateFeedback']);
+Route::get('/Lecturer/deleteFeedback/{id}',[FeedbackController::class,'deleteFeedback']);
+Route::get('/Lecturer/viewFeedback/{id}',[FeedbackController::class,'LecturerViewFeedback']);
+Route::get('/Lecturer/editFeedback/{id}',[FeedbackController::class,'LecturerEditFeedback']);
+Route::get('/Lecturer/statusFeedback/{id}/{status}',[FeedbackController::class,'statusFeedback']);
