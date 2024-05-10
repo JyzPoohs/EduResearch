@@ -4,23 +4,24 @@
     <div class="container mt-4">
         <div class="card p-3">
             <div class="card-body">
-                <h3 class="card-title">Publication Title</h3>
+                <h3 class="card-title">{{ $data->title ? $data->title : 'Publication Title' }}</h3>
                 <div>
-                    <p>01/03/23</p>
+                    <p>{{ $data->date ? $data->date : 'Published Date' }}</p>
                 </div>
                 <div>
-                    <p>Authors Name</p>
-                    <p>Keywords: Keywords</p>
-                    <p>URL: https:sssss</p>
-                    <p>DOI: ssssss</p>
+                    <p>Author(s): {{ $data->author ? $data->author : 'Author(s) Name' }}</p>
+                    <p>Type: {{ $data->type ? ucfirst($data->type) : 'Publication Type' }}</p>
+                    <p>Keyword(s): {{ $data->keywords ? $data->keywords : 'Publication Keywords' }}</p>
+                    <p>URL: {{ $data->url ? $data->url : 'Publication URL' }}</p>
+                    <p>DOI: {{ $data->doi ? $data->doi : 'Publication DOI' }}</p>
                 </div>
                 <div>
                     <h4>Abstract</h4>
-                    <p>xxxxxxxxxxxxxxxxxxxx</p>
+                    <p>{{ $data->abstract ? $data->abstract : 'Publication Abstract' }}</p>
                 </div>
                 <div>
                     <a class="btn btn-view" href="">Download full-text pdf</a>
-                    <a class="btn btn-secondary" href="">Back</a>
+                    <a class="btn btn-secondary" href="{{ route('home') }}">Back</a>
 
                 </div>
             </div>

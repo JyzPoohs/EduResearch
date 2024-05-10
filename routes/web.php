@@ -13,20 +13,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/', [HomeController::class, 'home']);
-	Route::get('home', function () {
-		return view('home');
-	})->name('home');
-
 	//Manage Publication
+	Route::get('/home', [PublicationController::class, 'home'])->name('home');
 	Route::get('/publications-list', [PublicationController::class, 'index'])->name('publications-list');
-	Route::get('/publication', [PublicationController::class, 'view'])->name('publications.view');
+	Route::get('/publication/{id}', [PublicationController::class, 'view'])->name('publications.view');
 	Route::get('/add-publication-form', [PublicationController::class, 'create'])->name('publications.create');
 	Route::post('/add-publication-form', [PublicationController::class, 'store'])->name('publications.store');
-	Route::get('/view-publication', [PublicationController::class, 'show'])->name('publications.show');
-	Route::get('/edit-publication', [PublicationController::class, 'edit'])->name('publications.edit');
-	Route::put('/edit-publication', [PublicationController::class, 'update'])->name('publications.update');
-	Route::delete('/delete-publication', [PublicationController::class, 'destroy'])->name('publications.destroy');
+	Route::get('/view-publication/{id}', [PublicationController::class, 'show'])->name('publications.show');
+	Route::get('/edit-publication/{id}', [PublicationController::class, 'edit'])->name('publications.edit');
+	Route::put('/update-publication/{id}', [PublicationController::class, 'update'])->name('publications.update');
+
+	Route::get('/delete-publication/{id}', [PublicationController::class, 'destroy'])->name('publications.destroy');
 
 	Route::get('billing', function () {
 		return view('billing');
@@ -43,14 +40,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('tables', function () {
 		return view('tables');
 	})->name('tables');
-
-    Route::get('static-sign-in', function () {
-		return view('static-sign-in');
-	})->name('sign-in');
-
-    Route::get('static-sign-up', function () {
-		return view('static-sign-up');
-	})->name('sign-up');
 
     Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/user-profile', [InfoUserController::class, 'create']);

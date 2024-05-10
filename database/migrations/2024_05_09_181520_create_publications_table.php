@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('publications', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('publisher_id')->constrained('users');
+            $table->string('title');
+            $table->string('author');
+            $table->string('type');
+            $table->date('date');
+            $table->string('keywords');
+            $table->string('doi');
+            $table->string('url');
+            $table->text('abstract');
+            $table->string('file');
             $table->timestamps();
         });
     }

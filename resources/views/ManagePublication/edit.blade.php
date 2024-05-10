@@ -2,61 +2,83 @@
 
 @section('content')
     <div class="container mt-4">
+        <div class="row mt-2">
+            @if (session()->has('success'))
+                <div id="alert">
+                    @include('ManagePublication.alert')
+                </div>
+            @endif
+
+        </div>
         <div class="card text-center">
             <div class="card-body">
                 <h3 class="card-title">Edit Publication</h3>
                 <div class="text-center">
-                    <form style="width: 800px; margin:auto" action="" class="form">
+                    <form style="width: 800px; margin:auto" action={{ route('publications.update', ['id' => $data->id]) }} 
+                        class="form" method="post" enctype="multipart/form-data" role="form">
+                        @csrf
+                        @method('PUT')
+                        <input hidden type="text" class="form-control" id="publisher_id" name="publisher_id" required
+                                value="{{ $data->publisher_id ? $data->publisher_id : 'publisher_id' }}">
                         <div class="form-group mb-3">
                             <label for="title">Title</label>
                             <input type="text" class="form-control" id="title" name="title" required
-                                placeholder="eg. Building A Sustainable Future: An Experimental Study on...">
+                                value="{{ $data->title ? $data->title : 'Author(s) Name' }}">
                         </div>
                         <div class="form-group mb-3">
                             <label for="author">Author(s)</label>
                             <input type="text" class="form-control" id="author" name="author" required
-                                placeholder="Junaid Kameran Ahmed, Nihat Atmaca">
+                                value="{{ $data->author ? $data->author : 'Author(s) Name' }}">
                         </div>
                         <div class="form-group mb-3">
                             <label for="type">Publication Type</label>
                             <select class="form-select" name="type" id="type">
-                                <option disabled selected value="default">Select Publication Type (eg. Article)</option>
-                                <option value="article">Article</option>
-                                <option value="book">Book</option>
-                                <option value="conference">Conference</option>
-                                <option value="journal">Journal</option>
-                                <option value="workshop">Workshop</option>
+                                <option disabled {{ $data->type == 'default' ? 'selected' : '' }} value="default">Select
+                                    Publication Type</option>
+                                <option {{ $data->type == 'article' ? 'selected' : '' }} selected value="article">
+                                    Article</option>
+                                <option {{ $data->type == 'book' ? 'selected' : '' }} value="book">Book</option>
+                                <option {{ $data->type == 'conference' ? 'selected' : '' }} value="conference">Conference
+                                </option>
+                                <option {{ $data->type == 'journal' ? 'selected' : '' }} value="journal">Journal
+                                </option>
+                                <option {{ $data->type == 'patent' ? 'selected' : '' }} value="patent">Patent</option>
+                                <option {{ $data->type == 'thesis' ? 'selected' : '' }} value="thesis">Thesis</option>
                             </select>
                         </div>
                         <div class="form-group mb-3">
                             <label for="date">Publication Date</label>
-                            <input type="date" class="form-control" id="date" name="date" required>
+                            <input type="date" class="form-control" id="date" name="date"
+                                value="{{ $data->date ? $data->date : 'Published Date' }}" required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="keywords">Keywords</label>
                             <input type="text" class="form-control" id="keywords" name="keywords" required
-                                placeholder="eg. Engineered geopolymer composites, Recycled brick waste powder, Construction waste">
+                                value="{{ $data->keywords ? $data->keywords : 'Publication Keywords' }}">
                         </div>
                         <div class="form-group mb-3">
                             <label for="doi">DOI</label>
                             <input type="text" class="form-control" id="doi" name="doi" required
-                                placeholder="eg. 10.1016/j.cscm.2024.e02863 or NA">
+                                value="{{ $data->doi ? $data->doi : 'Publication DOI' }}">
                         </div>
                         <div class="form-group mb-3">
                             <label for="url">URL</label>
                             <input type="text" class="form-control" id="url" name="url" required
-                                placeholder="eg. https://doi.org/10.1016/j.cscm.2024.e02863 or NA">
+                                value="{{ $data->url ? $data->url : 'Publication URL' }}">
                         </div>
                         <div class="form-group mb-3">
                             <label for="abstract">Abstract</label>
-                            <textarea class="form-control" id="abstract" name="abstract" rows="8" required
-                                placeholder="eg. In light of the growing global issue of construction waste management, disposal, and environmental impact, this study uniquely focuses on investigating the viability of recycled brick waste powder (RBWP) as a replacement for conventional industrial wastes like..."></textarea>
+                            <textarea class="form-control" id="abstract" name="abstract" rows="8" required>{{ $data->abstract ? $data->abstract : 'Publication Abstract' }}
+                            </textarea>
                         </div>
                         <div class="form-group mb-3">
                             <label for="file">Publication File</label>
-                            <input type="file" class="form-control" id="file" name="file" required>
+                            <p type="text" id="file" name="file">
+                                {{ $data->file ? $data->file : 'Publication File' }}</p>
+                            <input type="file" class="form-control" id="file" name="file">
                         </div>
                         <button type="submit" style="width: 700px" class="btn btn-view">Submit</button>
+                        
                     </form>
                     <a class="btn btn-secondary" style="width: 700px" href="{{ route('publications-list') }}">Back</a>
                 </div>

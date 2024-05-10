@@ -4,16 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Publication;
+use Illuminate\Support\Facades\Auth;
 
 class PublicationController extends Controller
 {
-    public function index()
+    public function home()
     {
-        return view('ManagePublication.index');
+        $datas = Publication::orderBy('created_at', 'desc')->get();
+        return view('ManagePublication.home', compact('datas'));
     }
 
-    public function view(){
-        return view('ManagePublication.view');
+    public function index()
+    {
+        if (Auth::user()->role == 'admin') {
+            $datas = Publication::orderBy('created_at', 'desc')->get();
+        } elseif (Auth::user()->role == 'lecturer') {
+            $datas = Publication::where('publisher_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        }
+        //dd($datas);
+        return view('ManagePublication.index', compact('datas'));
+    }
+
+    public function view($id)
+    {
+        $data = Publication::find($id);
+        return view('ManagePublication.view', compact('data'));
     }
 
     public function create()
@@ -21,49 +36,61 @@ class PublicationController extends Controller
         return view('ManagePublication.create');
     }
 
-    public function show(Publication $publication)
+    public function show($id)
     {
-        return view('ManagePublication.show', compact('publication'));
+        $data = Publication::find($id);
+        return view('ManagePublication.show', compact('data'));
     }
 
-    public function edit(Publication $publication)
+    public function edit($id)
     {
-        return view('ManagePublication.edit', compact('publication'));
+        $data = Publication::find($id);
+        return view('ManagePublication.edit', compact('data'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required',
-            'description' => 'required',
+            'author' => 'required',
+            'type' => 'required',
+            'date' => 'required',
+            'keywords' => 'required',
+            'doi' => 'required',
+            'url' => 'required',
+            'abstract' => 'required',
         ]);
 
         Publication::create($request->all());
 
         return redirect()->route('publications-list')
-            ->with('success', 'Publication created successfully.');
+            ->with('success', 'Publication added successfully.');
     }
 
-    public function update(Request $request, Publication $publication)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'title' => 'required',
-            'description' => 'required',
+            'author' => 'required',
+            'type' => 'required',
+            'date' => 'required',
+            'keywords' => 'required',
+            'doi' => 'required',
+            'url' => 'required',
+            'abstract' => 'required',
         ]);
-
-        $publication->update($request->all());
+        
+        Publication::find($id)->update($request->all());
 
         return redirect()->route('publications-list')
             ->with('success', 'Publication updated successfully');
     }
 
-    public function destroy()
+    public function destroy($id)
     {
-        // $publication->delete();
+        Publication::find($id)->delete();
 
         return redirect()->route('publications-list')
             ->with('success', 'Publication deleted successfully');
     }
-
-    
 }
