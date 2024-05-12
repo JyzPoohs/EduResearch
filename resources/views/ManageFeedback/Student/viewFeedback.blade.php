@@ -28,14 +28,14 @@
     <br>
     <div class="card">
         <div class="card-body">
-            <h4><b>Complaint:</b></h4>
+            <h4><b>Feedback:</b></h4>
             {{$data->explain}}
         </div>
     </div>
     @if ($data->answer!=null)
     <div class="card">
         <div class="card-body">
-            <h4><b>Reason Of Approval/Rejection:</b></h4>
+            <h4><b>Reason Of Feedback Acceptance/Rejection:</b></h4>
             {{$data->answer}}
         </div>
     </div>

@@ -14,14 +14,14 @@
             <br>
             <br>
             <div class='col-md-12'>
-                <label for='inputEmail4' class='form-label'><b>Fill In Your Complaint!</b></label>
-                <textarea type='text' row='4' class='form-control' name='complaint'  required></textarea>
+                <label for='inputEmail4' class='form-label'><b>Fill In Your Feedback!</b></label>
+                <textarea type='text' row='4' class='form-control' name='feedback'  required></textarea>
             </div>
         </div>
         <br>
         <center>
             <button class='btn btn-primary ' type='submit'>Submit</button>
-            <a type="button" class="btn btn-primary waves-effect waves-light" href='{{ url("/Student/complaint") }}'>Back</a>
+            <a type="button" class="btn btn-primary waves-effect waves-light" href='{{ url("/Student/feedback") }}'>Back</a>
         </center>
     </form>
 

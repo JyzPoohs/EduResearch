@@ -36,7 +36,7 @@
                                     @if ($q->status=='Pending')
                                         <a type='button' class='btn  btn-animation waves-effect waves-light' href='{{ url("/Student/updateFeedback", ["id" => $q->id]) }}'>
                                             <!-- <i class="ri-edit-line " style="color: black; font-size:20px;"></i> -->
-                                            <i class="far fa-pen-to-square"></i>
+                                            <i class="fa fa-pen"></i>
                                         </a>
                                     @else
                                         <button type='button' class='btn btn-animation waves-effect waves-light' style="color: grey; border: none; box-shadow: none;" disabled>
@@ -46,7 +46,7 @@
                                     @if ($q->status=='Pending')
                                         <button type='button' class='btn  btn-animation waves-effect waves-light' data-bs-toggle='modal' data-bs-target='#delete{{$modal}}'>
                                             <!-- <i class="ri-eraser-fill " style="color: red; font-size:20px;"></i> -->
-                                            <i class="fas fa-trash-can text-danger"></i>
+                                            <i class="fa fa-trash"></i>
                                         </button>
                                     @else
                                     <button type='button' class='btn btn-animation waves-effect waves-light' style="color: grey; border: none; box-shadow: none;" disabled>
@@ -72,7 +72,7 @@
                                             </div>
                                             <br>
                                             <div class='col-md-12'>
-                                                <label for='inputEmail4' class='form-label'><b>Complaint :</b></label>
+                                                <label for='inputEmail4' class='form-label'><b>Feedback :</b></label>
                                                 <textarea type='text' row='4' class='form-control' value='{{$q->explain}}'  readonly>{{$q->explain}}</textarea>
                                             </div>
                                             @if ($q->answer!=null)
@@ -105,8 +105,8 @@
                                                 <br>
                                                 <br>
                                                 <div class='col-md-12'>
-                                                    <label for='inputEmail4' class='form-label'><b>Fill In Your Complaint!</b></label>
-                                                    <textarea type='text' row='4' class='form-control' name='complaint' value='{{$q->explain}}' required>{{$q->explain}}</textarea>
+                                                    <label for='inputEmail4' class='form-label'><b>Fill In Your Feedback!</b></label>
+                                                    <textarea type='text' row='4' class='form-control' name='feedback' value='{{$q->explain}}' required>{{$q->explain}}</textarea>
                                                 </div>
                                             </div>
                                             <div class='modal-footer'>
@@ -127,7 +127,7 @@
                                     </div>
                                     <div class='modal-body'>
                                         <center>
-                                            <h3><b>Delete The Complaint?</b></h3>
+                                            <h3><b>Delete The Feedback?</b></h3>
                                             <div class="row">
                                                 <div class="col">
                                                     <a class='btn btn-danger' href='{{ url("/Student/deleteFeedback", ["id" => $q->id]) }}'  type='submit'>Yes</a>
@@ -168,8 +168,8 @@
                         <br>
                         <br>
                         <div class='col-md-12'>
-                            <label for='inputEmail4' class='form-label'><b>Fill In Your Complaint!</b></label>
-                            <textarea type='text' row='4' class='form-control' name='complaint'  required></textarea>
+                            <label for='inputEmail4' class='form-label'><b>Fill In Your Feedback!</b></label>
+                            <textarea type='text' row='4' class='form-control' name='feedback'  required></textarea>
                         </div>
                     </div>
                     <div class='modal-footer'>
