@@ -34,7 +34,7 @@
                                         <i class="far fa-eye"></i>
                                     </a>
                                     @if ($q->status=='Pending')
-                                        <a type='button' class='btn  btn-animation waves-effect waves-light' href='{{ url("/Student/updateFeedback", ["id" => $q->id]) }}'>
+                                        <a type='button' class='btn  btn-animation waves-effect waves-light' href='{{ url("/Student/updateFeedbacks", $q->id) }}'>
                                             <!-- <i class="ri-edit-line " style="color: black; font-size:20px;"></i> -->
                                             <i class="fa fa-pen"></i>
                                         </a>

@@ -17,7 +17,7 @@ class FeedbackController extends Controller
         ->first();
         return view('ManageFeedback\Student\viewFeedback',['data'=>$q]);
     }
-    public function updateFeedback($id){
+    public function updateFeedbacks($id){
         $q=Feedback::where('id',$id)
         ->first();
         return view('ManageFeedback\Student\updateFeedback',['data'=>$q]);
@@ -35,7 +35,7 @@ class FeedbackController extends Controller
         ]);
         return $this->index();
     }
-    public function updateFeedbacks(Request $request) {
+    public function updateFeedback(Request $request) {
 
         Feedback::where('id',$request->id)
         ->update([
