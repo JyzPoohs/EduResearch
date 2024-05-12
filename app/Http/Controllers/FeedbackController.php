@@ -30,7 +30,7 @@ class FeedbackController extends Controller
         Feedback::create([
             'name'=>$request->nama,
             'noKp'=>$request->noKp,
-            'explain'=>$request->complaint,
+            'explain'=>$request->feedback,
             'status'=>'Pending'
         ]);
         return $this->index();
@@ -39,10 +39,10 @@ class FeedbackController extends Controller
 
         Feedback::where('id',$request->id)
         ->update([
-            'explain'=>$request->complaint,
+            'explain'=>$request->feedback,
             'answer'=>$request->answer ?? null,
         ]);
-        return redirect()->back()->with('success', 'Complaint Update successfully!');
+        return redirect()->back()->with('success', 'Feedback Update successfully!');
     }
     public function deleteFeedback(Request $request,$id){
         Feedback::where('id',$id)->delete();

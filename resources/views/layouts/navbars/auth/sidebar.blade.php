@@ -175,7 +175,6 @@
                     <span class="nav-link-text ms-1">Feedback</span>
                 </a>
             </li>
-        </ul>
         @if (Auth::user()->role == 'admin' || Auth::user()->role == 'lecturer')
         <li class="nav-item">
             <a class="nav-link {{ Request::is('Lecturerfeedbacklist') ? 'active' : '' }}"
@@ -208,6 +207,7 @@
                     <span class="nav-link-text ms-1">FeedbackLect</span>
                 </a>
             </li>
-            @endif
+        </ul>
+        @endif
     </div>
 </aside>

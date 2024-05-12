@@ -30,8 +30,8 @@
         @csrf
         <div class='modal-body'>
             <div class='col-md-12'>
-                <label for='inputEmail4' class='form-label'><b>Fill In Your Complaint!</b></label>
-                <textarea type='text' row='4' class='form-control' name='complaint' value='{{$data->explain}}' required readonly >{{$data->explain}}</textarea>
+                <label for='inputEmail4' class='form-label'><b>Fill In Your Feedback!</b></label>
+                <textarea type='text' row='4' class='form-control' name='feedback' value='{{$data->explain}}' required readonly >{{$data->explain}}</textarea>
             </div>
             @if ($data->status!='Pending')
                 <br>
