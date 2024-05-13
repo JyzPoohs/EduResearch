@@ -2,24 +2,25 @@
 
 @section('content')
     <div class="container mt-4">
-        <div class="row mt-2">
-            @if (session()->has('success'))
-                <div id="alert">
-                    @include('ManagePublication.alert')
-                </div>
-            @endif
-
+        <div class="container mt-4">
+            <div class="row mt-2">
+                @if (session()->has('success') || session()->has('error'))
+                    <div id="alert">
+                        @include('ManagePublication.alert')
+                    </div>
+                @endif
+            </div>
         </div>
         <div class="card text-center">
             <div class="card-body">
                 <h3 class="card-title">Edit Publication</h3>
                 <div class="text-center">
-                    <form style="width: 800px; margin:auto" action={{ route('publications.update', ['id' => $data->id]) }} 
+                    <form style="width: 800px; margin:auto" action={{ route('publications.update', ['id' => $data->id]) }}
                         class="form" method="post" enctype="multipart/form-data" role="form">
                         @csrf
                         @method('PUT')
                         <input hidden type="text" class="form-control" id="publisher_id" name="publisher_id" required
-                                value="{{ $data->publisher_id ? $data->publisher_id : 'publisher_id' }}">
+                            value="{{ $data->publisher_id ? $data->publisher_id : 'publisher_id' }}">
                         <div class="form-group mb-3">
                             <label for="title">Title</label>
                             <input type="text" class="form-control" id="title" name="title" required
@@ -78,7 +79,7 @@
                             <input type="file" class="form-control" id="file" name="file">
                         </div>
                         <button type="submit" style="width: 700px" class="btn btn-view">Submit</button>
-                        
+
                     </form>
                     <a class="btn btn-secondary" style="width: 700px" href="{{ route('publications-list') }}">Back</a>
                 </div>

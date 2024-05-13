@@ -2,6 +2,15 @@
 
 @section('content')
     <div class="container mt-4">
+        <div class="container mt-4">
+            <div class="row mt-2">
+                @if (session()->has('success') || session()->has('error'))
+                    <div id="alert">
+                        @include('ManagePublication.alert')
+                    </div>
+                @endif
+            </div>
+        </div>
         <div class="card p-3">
             <div class="card-body">
                 <h3 class="card-title">{{ $data->title ? $data->title : 'Publication Title' }}</h3>
@@ -20,9 +29,12 @@
                     <p>{{ $data->abstract ? $data->abstract : 'Publication Abstract' }}</p>
                 </div>
                 <div>
-                    <a class="btn btn-view" href="">Download full-text pdf</a>
+                    <p><strong>Full-text PDF:</strong> {{$data->file}}</p>
+                </div>
+                <div>
+                    <a href="{{ route('publications.viewPDF', ['id' => $data->id]) }}" class="btn btn-view" href="">View
+                        full-text pdf</a>
                     <a class="btn btn-secondary" href="{{ route('home') }}">Back</a>
-
                 </div>
             </div>
         </div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Publication;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class PublicationController extends Controller
 {
@@ -48,6 +50,16 @@ class PublicationController extends Controller
         return view('ManagePublication.edit', compact('data'));
     }
 
+    public function pdf($id)
+    {
+        $data = Publication::find($id);
+        $path = public_path('files/' . $data->file);
+        if (!file_exists($path)) {
+            return back()->with('error', 'PDF is Not Viewable/Available.');
+        }
+        return response()->file($path);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -59,9 +71,29 @@ class PublicationController extends Controller
             'doi' => 'required',
             'url' => 'required',
             'abstract' => 'required',
+            'file' => 'nullable|mimes:pdf|max:2048',
         ]);
 
-        Publication::create($request->all());
+        if($request->hasFile('file')){
+            $file = $request->file('file');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('files'), $fileName);
+        }else{
+            $fileName = null;
+        }
+
+        Publication::create([
+            'publisher_id' => Auth::user()->id,
+            'title' => $request->title,
+            'author' => $request->author,
+            'type' => $request->type,
+            'date' => $request->date,
+            'keywords' => $request->keywords,
+            'doi' => $request->doi,
+            'url' => $request->url,
+            'abstract' => $request->abstract,
+            'file' => $fileName,
+        ]);
 
         return redirect()->route('publications-list')
             ->with('success', 'Publication added successfully.');
@@ -69,6 +101,7 @@ class PublicationController extends Controller
 
     public function update(Request $request, $id)
     {
+        $publication = Publication::find($id);
         $request->validate([
             'title' => 'required',
             'author' => 'required',
@@ -78,9 +111,33 @@ class PublicationController extends Controller
             'doi' => 'required',
             'url' => 'required',
             'abstract' => 'required',
+            'file' => 'nullable|mimes:pdf|max:2048',
         ]);
+
+        if($request->hasFile('file')){
+            $file = $request->file('file');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('files'), $fileName);
+
+            if(File::exists($publication->file)){
+                File::delete(public_path('files/' . $publication->file));
+            }
+        }else{
+            $fileName = null;
+        }
         
-        Publication::find($id)->update($request->all());
+        $publication->update([
+            'title' => $request->title,
+            'author' => $request->author,
+            'type' => $request->type,
+            'date' => $request->date,
+            'keywords' => $request->keywords,
+            'doi' => $request->doi,
+            'url' => $request->url,
+            'abstract' => $request->abstract,
+            'file' => $fileName,
+        
+        ]);
 
         return redirect()->route('publications-list')
             ->with('success', 'Publication updated successfully');
@@ -93,4 +150,6 @@ class PublicationController extends Controller
         return redirect()->route('publications-list')
             ->with('success', 'Publication deleted successfully');
     }
+
+   
 }
