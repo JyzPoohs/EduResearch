@@ -42,7 +42,7 @@
     @endif
     <center>
     <!-- Base Buttons -->
-    <a type="button" class="btn btn-primary waves-effect waves-light" href="javascript:history.back()">Back</a>
+    <a type="button" class="btn btn-primary waves-effect waves-light" href='{{ url("/Student/feedback") }}'>Back</a>
 
     </center>
 

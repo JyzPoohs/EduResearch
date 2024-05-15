@@ -13,10 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-	return view('session/login-session');
-});
-
 Route::group(['middleware' => 'auth'], function () {
 
 	//Manage Publication
@@ -28,9 +24,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/view-publication/{id}', [PublicationController::class, 'show'])->name('publications.show');
 	Route::get('/edit-publication/{id}', [PublicationController::class, 'edit'])->name('publications.edit');
 	Route::put('/update-publication/{id}', [PublicationController::class, 'update'])->name('publications.update');
-	Route::get('/delete-publication/{id}', [PublicationController::class, 'destroy'])->name('publications.destroy');
-	Route::get('/view-PDF/{id}', [PublicationController::class, 'pdf'])->name('publications.viewPDF');
 
+	Route::get('/delete-publication/{id}', [PublicationController::class, 'destroy'])->name('publications.destroy');
 
 	Route::get('billing', function () {
 		return view('billing');
@@ -74,13 +69,15 @@ Route::get('/login', function () {
     return view('session/login-session');
 })->name('login');
 
+
+
 //complaint module
 Route::get('/feedbacklist', [FeedbackController::class, 'index'])->name('feedbacklist');
 
 Route::get('/Student/feedback',[FeedbackController::class,'index']);
 Route::get('/Student/newApplication',[FeedbackController::class,'newApplication']);
-Route::get('/stu-viewFeedback/{id}',[FeedbackController::class,'viewFeedback'])->name('stu.viewFeedbackForm');
-Route::get('/stu-updateFeedbacks/{id}',[FeedbackController::class,'updateFeedbacks'])->name('stu.updateFeedbackForm');
+Route::get('/Student/viewFeedback/{id}',[FeedbackController::class,'viewFeedback']);
+Route::get('/Student/updateFeedbacks/{id}',[FeedbackController::class,'updateFeedbacks'])->name('updateFeedbacksForm');
 Route::post('/Student/addFeedback',[FeedbackController::class,'addFeedback']);
 Route::post('/Student/updateFeedback',[FeedbackController::class,'updateFeedback']);
 Route::get('/Student/deleteFeedback/{id}',[FeedbackController::class,'deleteFeedback']);
@@ -89,6 +86,7 @@ Route::get('/Lecturer/feedback',[FeedbackController::class,'LecturerFeedback'])-
 Route::post('/Lecturer/addFeedback',[FeedbackController::class,'addFeedback']);
 Route::post('/Lecturer/updateFeedback',[FeedbackController::class,'updateFeedback']);
 Route::get('/Lecturer/deleteFeedback/{id}',[FeedbackController::class,'deleteFeedback']);
-Route::get('/viewFeedback/{id}',[FeedbackController::class,'LecturerViewFeedback'])->name('lec.viewFeedbackForm');
-Route::get('/editFeedback/{id}',[FeedbackController::class,'LecturerEditFeedback'])->name('lec.editFeedbackForm');
+Route::get('/Lecturer/viewFeedback/{id}',[FeedbackController::class,'LecturerViewFeedback']);
+Route::get('/Lecturer/editFeedback/{id}',[FeedbackController::class,'LecturerEditFeedback']);
 Route::get('/Lecturer/statusFeedback/{id}/{status}',[FeedbackController::class,'statusFeedback']);
+Route::post('/Lecturer/statusFeedback/{id}', [FeedbackController::class, 'updateStatus'])->name('lecturer.updateStatus');

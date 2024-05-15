@@ -1,209 +1,184 @@
 @extends('layouts.user_type.auth')
 @section('content')
-    <div class="container-fluid mt-4">
-        <div class="card">
-            <div class="card-body">
-                <a type="button" class="btn btn-success btn-animation waves-effect waves-light" data-text="New Application"
-                    href='{{ url('/Student/newApplication') }}'><span>New Application</span></a>
-                <br>
-                <br>
-                <table class="table table-striped align-middle table-nowrap mb-0">
-                    <thead class="table-info">
+<div class="container-fluid mt-4">
+<div class="card">
+        <div class="card-body">
+            <a type="button" class="btn btn-success btn-animation waves-effect waves-light" data-text="New Application" href='{{ url("/Student/newApplication")}}'><span>New Application</span></a>
+            <br>
+            <br>
+            <table class="table table-striped align-middle table-nowrap mb-0">
+                <thead class="table-info">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">I/C Number</th>
+                        <th scope="col">Status</th>
+                        <th scope="col" class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $modal = 1;
+                    @endphp
+                    @foreach ($data as $q)
                         <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">I/C Number</th>
-                            <th scope="col">Status</th>
-                            <th scope="col" class="text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            $modal = 1;
-                        @endphp
-                        @foreach ($data as $q)
-                            <tr>
-                                <th scope='row'>{{ $modal++ }}</th>
-                                <td>{{ $q->name }}</td>
-                                <td>{{ $q->noKp }}</td>
-                                <td
-                                    style="color:{{ $q->status == 'Pending' ? 'orange' : ($q->status == 'Approved' ? 'green' : 'red') }}">
-                                    {{ $q->status }}</td>
-                                <td>
-                                    <center>
-                                        <a class='btn  btn-animation waves-effect waves-light'
-                                            href='{{ route('stu.viewFeedbackForm', $q->id) }}'>
-                                            <!-- <i class="ri-eye-line" style="color: green; font-size:20px;"></i> -->
-                                            <i class="far fa-eye"></i>
+                            <th scope='row'>{{$modal++}}</th>
+                            <td>{{$q->name}}</td>
+                            <td>{{$q->noKp}}</td>
+                            <td style="color:{{$q->status=='Pending' ? 'orange' : ($q->status=='Approved' ? 'green' : 'red')}}"
+                                >{{$q->status}}</td>
+                            <td >
+                                <center>
+                                    <a class='btn  btn-animation waves-effect waves-light' href='{{ url("/Student/viewFeedback", ["id" => $q->id]) }}'>
+                                        <!-- <i class="ri-eye-line" style="color: green; font-size:20px;"></i> -->
+                                        <i class="far fa-eye"></i>
+                                    </a>
+                                    @if ($q->status=='Pending')
+                                        <a type='button' class='btn  btn-animation waves-effect waves-light' href='{{ url("/Student/updateFeedbacks", ["id"=> $q->id]) }}'>
+                                            <!-- <i class="ri-edit-line " style="color: black; font-size:20px;"></i> -->
+                                            <i class="fa fa-pen"></i>
                                         </a>
-                                        @if ($q->status == 'Pending')
-                                            <a type='button' class='btn  btn-animation waves-effect waves-light'
-                                                href='{{ route('stu.updateFeedbackForm', $q->id) }}'>
-                                                <!-- <i class="ri-edit-line " style="color: black; font-size:20px;"></i> -->
-                                                <i class="fa fa-pen"></i>
-                                            </a>
-                                        @else
-                                            <button type='button' class='btn btn-animation waves-effect waves-light'
-                                                style="color: grey; border: none; box-shadow: none;" disabled>
-                                                <i class="ri-edit-line " style="color: black; font-size:20px;"></i>
-                                            </button>
-                                        @endif
-                                        @if ($q->status == 'Pending')
-                                            <button type='button' class='btn  btn-animation waves-effect waves-light'
-                                                data-bs-toggle='modal' data-bs-target='#delete{{ $modal }}'>
-                                                <!-- <i class="ri-eraser-fill " style="color: red; font-size:20px;"></i> -->
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        @else
-                                            <button type='button' class='btn btn-animation waves-effect waves-light'
-                                                style="color: grey; border: none; box-shadow: none;" disabled>
-                                                <i class="ri-eraser-fill" style="color: red; font-size:20px;"></i>
-                                            </button>
-                                        @endif
-                                    </center>
-                                </td>
-                            </tr>
-                            <div id="view{{ $modal }}" class="modal fade" tabindex="-1"
-                                aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h3 class="modal-title" id="myModalLabel">View Application</h3>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"> </button>
-                                        </div>
+                                    @else
+                                        <button type='button' class='btn btn-animation waves-effect waves-light' style="color: grey; border: none; box-shadow: none;" disabled>
+                                            <i class="ri-edit-line " style="color: black; font-size:20px;"></i>
+                                        </button>
+                                    @endif
+                                    @if ($q->status=='Pending')
+                                        <button type='button' class='btn  btn-animation waves-effect waves-light' data-bs-toggle='modal' data-bs-target='#delete{{$modal}}'>
+                                            <!-- <i class="ri-eraser-fill " style="color: red; font-size:20px;"></i> -->
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    @else
+                                    <button type='button' class='btn btn-animation waves-effect waves-light' style="color: grey; border: none; box-shadow: none;" disabled>
+                                        <i class="ri-eraser-fill" style="color: red; font-size:20px;"></i>
+                                    </button>
+                                    @endif
+                                </center>
+                            </td>
+                        </tr>
+                        <div id="view{{$modal}}" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title" id="myModalLabel">View Application</h3>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                                    </div>
                                         <div class='modal-body'>
                                             <div class='col-md-12'>
                                                 <label for='inputEmail4' class='form-label'><b>Personal Details</b></label>
-                                                <input class='form-control' value='{{ $q->name }}' readonly>
+                                                <input class='form-control' value='{{$q->name}}' readonly>
                                                 <br>
-                                                <input class='form-control' value='{{ $q->noKp }}' readonly>
+                                                <input  class='form-control' value='{{$q->noKp}}' readonly>
                                             </div>
                                             <br>
                                             <div class='col-md-12'>
                                                 <label for='inputEmail4' class='form-label'><b>Feedback :</b></label>
-                                                <textarea type='text' row='4' class='form-control' value='{{ $q->explain }}' readonly>{{ $q->explain }}</textarea>
+                                                <textarea type='text' row='4' class='form-control' value='{{$q->explain}}'  readonly>{{$q->explain}}</textarea>
                                             </div>
-                                            @if ($q->answer != null)
+                                            @if ($q->answer!=null)
                                                 <div class='col-md-12'>
-                                                    <label for='inputEmail4' class='form-label'><b>Reason Of
-                                                            Approval/Rejection :</b></label>
-                                                    <textarea type='text' row='5' class='form-control' value='{{ $q->answer }}' readonly>{{ $q->answer }}</textarea>
+                                                    <label for='inputEmail4' class='form-label'><b>Reason Of Approval/Rejection :</b></label>
+                                                    <textarea type='text' row='5' class='form-control' value='{{$q->answer}}'  readonly>{{$q->answer}}</textarea>
                                                 </div>
                                             @endif
                                         </div>
-                                    </div><!-- /.modal-content -->
-                                </div><!-- /.modal-dialog -->
-                            </div>
-                            <div id="edit{{ $modal }}" class="modal fade" tabindex="-1"
-                                aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h3 class="modal-title" id="myModalLabel">Edit Application</h3>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"> </button>
-                                        </div>
-                                        <form method='post' action='{{ url('/Student/updateFeedback') }}'>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div>
+                        <div id="edit{{$modal}}" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title" id="myModalLabel">Edit Application</h3>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                                    </div>
+                                        <form method='post' action='{{ url("/Student/updateFeedback") }}'>
                                             @csrf
                                             <div class='modal-body'>
                                                 <div class='col-md-12'>
-                                                    <label for='inputEmail4' class='form-label'><b>Personal
-                                                            Details</b></label>
-                                                    <input type='text' class='form-control' name='nama'
-                                                        placeholder="Fill In Your Name!" value='{{ $q->name }}'
-                                                        required>
+                                                    <label for='inputEmail4' class='form-label'><b>Personal Details</b></label>
+                                                    <input type='text' class='form-control' name='nama' placeholder="Fill In Your Name!" value='{{$q->name}}' required>
                                                     <br>
-                                                    <input type='number' class='form-control' name='noKp'
-                                                        placeholder="Fill In Your IC Number!" value='{{ $q->noKp }}'
-                                                        required>
+                                                    <input type='number' class='form-control' name='noKp' placeholder="Fill In Your IC Number!" value='{{$q->noKp}}' required>
                                                 </div>
 
                                                 <br>
                                                 <br>
                                                 <div class='col-md-12'>
-                                                    <label for='inputEmail4' class='form-label'><b>Fill In Your
-                                                            Feedback!</b></label>
-                                                    <textarea type='text' row='4' class='form-control' name='feedback' value='{{ $q->explain }}' required>{{ $q->explain }}</textarea>
+                                                    <label for='inputEmail4' class='form-label'><b>Fill In Your Feedback!</b></label>
+                                                    <textarea type='text' row='4' class='form-control' name='feedback' value='{{$q->explain}}' required>{{$q->explain}}</textarea>
                                                 </div>
                                             </div>
                                             <div class='modal-footer'>
-                                                <input type='hidden' value='{{ $q->id }}' name='id' />
+                                                <input type='hidden' value='{{$q->id}}' name='id'/>
                                                 <!-- <button type='button' class='btn btn-light' data-bs-dismiss='modal'>Tutu</button> -->
                                                 <button class='btn btn-primary ' type='submit'>Submit</button>
                                             </div>
                                         </form>
-                                    </div><!-- /.modal-content -->
-                                </div><!-- /.modal-dialog -->
-                            </div>
-                            <div id="delete{{ $modal }}" class="modal fade" tabindex="-1"
-                                aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div>
+                        <div id="delete{{$modal}}" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
 
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"> </button>
-                                        </div>
-                                        <div class='modal-body'>
-                                            <center>
-                                                <h3><b>Delete The Feedback?</b></h3>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <a class='btn btn-danger'
-                                                            href='{{ url('/Student/deleteFeedback', ['id' => $q->id]) }}'
-                                                            type='submit'>Yes</a>
-                                                    </div>
-                                                    <div class="col">
-                                                        <button type="button" class="btn btn-info"
-                                                            data-bs-dismiss="modal">No</button>
-                                                    </div>
-
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                                    </div>
+                                    <div class='modal-body'>
+                                        <center>
+                                            <h3><b>Delete The Feedback?</b></h3>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <a class='btn btn-danger' href='{{ url("deleteFeedback", ["id" => $q->id]) }}'  type='submit'>Yes</a>
                                                 </div>
-                                            </center>
-                                        </div>
-                                    </div><!-- /.modal-content -->
-                                </div><!-- /.modal-dialog -->
-                            </div>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true"
-            style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title" id="myModalLabel">New Application</h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
-                    </div>
-                    <form method='post' action='{{ url('/Student/addFeedback') }}'>
-                        @csrf
-                        <div class='modal-body'>
-                            <div class='col-md-12'>
-                                <label for='inputEmail4' class='form-label'><b>Personal Details</b></label>
-                                <input type='text' class='form-control' name='nama'
-                                    placeholder="Fill In Your Name!" required>
-                                <br>
-                                <input type='number' class='form-control' name='noKp'
-                                    placeholder="Fill In Your IC Number!" required>
-                            </div>
+                                                <div class="col">
+                                                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">No</button>
+                                                </div>
 
-                            <br>
-                            <br>
-                            <div class='col-md-12'>
-                                <label for='inputEmail4' class='form-label'><b>Fill In Your Feedback!</b></label>
-                                <textarea type='text' row='4' class='form-control' name='feedback' required></textarea>
-                            </div>
+                                            </div>
+                                        </center>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
                         </div>
-                        <div class='modal-footer'>
-                            <!-- <button type='button' class='btn btn-light' data-bs-dismiss='modal'>Tutu</button> -->
-                            <button class='btn btn-primary ' type='submit'>Submit</button>
-                        </div>
-                    </form>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
+    <div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="myModalLabel">New Application</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                </div>
+                <form method='post' action='{{ url("/Student/addFeedback") }}'>
+                    @csrf
+                    <div class='modal-body'>
+                        <div class='col-md-12'>
+                            <label for='inputEmail4' class='form-label'><b>Personal Details</b></label>
+                            <input type='text' class='form-control' name='nama' placeholder="Fill In Your Name!" required>
+                            <br>
+                            <input type='number' class='form-control' name='noKp' placeholder="Fill In Your IC Number!" required>
+                        </div>
+
+                        <br>
+                        <br>
+                        <div class='col-md-12'>
+                            <label for='inputEmail4' class='form-label'><b>Fill In Your Feedback!</b></label>
+                            <textarea type='text' row='4' class='form-control' name='feedback'  required></textarea>
+                        </div>
+                    </div>
+                    <div class='modal-footer'>
+                        <!-- <button type='button' class='btn btn-light' data-bs-dismiss='modal'>Tutu</button> -->
+                        <button class='btn btn-primary ' type='submit'>Submit</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
 @endsection
