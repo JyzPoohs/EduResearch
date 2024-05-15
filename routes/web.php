@@ -76,8 +76,8 @@ Route::get('/feedbacklist', [FeedbackController::class, 'index'])->name('feedbac
 
 Route::get('/Student/feedback',[FeedbackController::class,'index']);
 Route::get('/Student/newApplication',[FeedbackController::class,'newApplication']);
-Route::get('/viewFeedback/{id}',[FeedbackController::class,'viewFeedback']);
-Route::get('/Student/updateFeedbacks/{id}',[FeedbackController::class,'updateFeedbacks']);
+Route::get('/Student/viewFeedback/{id}',[FeedbackController::class,'viewFeedback']);
+Route::get('/Student/updateFeedbacks/{id}',[FeedbackController::class,'updateFeedbacks'])->name('updateFeedbacksForm');
 Route::post('/Student/addFeedback',[FeedbackController::class,'addFeedback']);
 Route::post('/Student/updateFeedback',[FeedbackController::class,'updateFeedback']);
 Route::get('/Student/deleteFeedback/{id}',[FeedbackController::class,'deleteFeedback']);
@@ -89,3 +89,4 @@ Route::get('/Lecturer/deleteFeedback/{id}',[FeedbackController::class,'deleteFee
 Route::get('/Lecturer/viewFeedback/{id}',[FeedbackController::class,'LecturerViewFeedback']);
 Route::get('/Lecturer/editFeedback/{id}',[FeedbackController::class,'LecturerEditFeedback']);
 Route::get('/Lecturer/statusFeedback/{id}/{status}',[FeedbackController::class,'statusFeedback']);
+Route::post('/Lecturer/statusFeedback/{id}', [FeedbackController::class, 'updateStatus'])->name('lecturer.updateStatus');

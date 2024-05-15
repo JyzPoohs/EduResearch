@@ -40,7 +40,7 @@
             <!-- <button type='button' class='btn btn-light' data-bs-dismiss='modal'>Tutu</button> -->
             <center>
                 <button class='btn btn-primary ' type='submit'>Update</button>
-                <a type="button" class="btn btn-primary waves-effect waves-light" href="javascript:history.back()">Back</a>
+                <a type="button" class="btn btn-primary waves-effect waves-light" href="{{ route('feedbacklist') }}">Back</a>
 
             </center>
     </form>

@@ -1,6 +1,12 @@
 @extends('layouts.user_type.auth')
 @section('content')
 
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
 <table class="table table-striped align-middle table-nowrap mb-0">
         <thead class="table-info">
             <tr>
@@ -27,28 +33,41 @@
     </table>
     <br>
     <div class="card">
-        <div class="card-body">
-            <h4><b>Feedback:</b></h4>
-            {{$data->explain}}
-        </div>
+    <div class="card-body">
+        <h4><b>Feedback:</b></h4>
+        {{$data->explain}}
     </div>
-    @if ($data->answer!=null)
+</div>
+@if ($data->status == 'Pending')
+<form action="{{ route('lecturer.updateStatus', ['id' => $data->id]) }}" method="POST">
+        @csrf
+        <div class="card">
+            <div class="card-body">
+                <h4><b>Reason Of Approval/Rejection:</b></h4>
+                <textarea name="reason" class="form-control" placeholder="Enter reason here..." required></textarea>
+                <div class="form-group mt-3">
+                    <label for="status">Select Status:</label>
+                    <select name="status" class="form-control" required>
+                        <option value="Approved">Approve</option>
+                        <option value="Rejected">Reject</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <center>
+            <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+        </center>
+    </form>
+@else
     <div class="card">
         <div class="card-body">
             <h4><b>Reason Of Approval/Rejection:</b></h4>
             {{$data->answer}}
         </div>
     </div>
-    @endif
     <center>
-    <!-- Base Buttons -->
-        @if ($data->status=='Pending')
-            <a type="button" class="btn btn-primary waves-effect waves-light"  href='{{ url("/Lecturer/statusFeedback", ["id" => $data->id, 'status'=>'Approved']) }}'>Approve</a>
-            <a type="button" class="btn btn-primary waves-effect waves-light"  href='{{ url("/Lecturer/statusFeedback", ["id" => $data->id, 'status'=>'Rejected']) }}'>Reject</a>
-        @else
-        <a type="button" class="btn btn-primary waves-effect waves-light" href="javascript:history.back()">Back</a>
-
-        @endif
+        <a type="button" class="btn btn-primary waves-effect waves-light" href='{{ url("/Lecturer/feedback") }}'>Back</a>
     </center>
+@endif
 
 @endsection

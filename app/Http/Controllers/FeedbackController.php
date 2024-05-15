@@ -18,9 +18,11 @@ class FeedbackController extends Controller
         return view('ManageFeedback\Student\viewFeedback',['data'=>$q]);
     }
     public function updateFeedbacks($id){
-        $q=Feedback::where('id',$id)
+        $data=Feedback::where('id',$id)
         ->first();
-        return view('ManageFeedback\Student\updateFeedback',['data'=>$q]);
+        
+        // return view('ManageFeedback\Student\updateFeedback',['data'=>$q]);
+        return view('ManageFeedback.Student.updateFeedback', compact('data'));
     }
 
     public function newApplication(){
@@ -42,9 +44,10 @@ class FeedbackController extends Controller
             'explain'=>$request->feedback,
             'answer'=>$request->answer ?? null,
         ]);
-        return redirect()->back()->with('success', 'Feedback Update successfully!');
+        return redirect()->back();
     }
     public function deleteFeedback(Request $request,$id){
+        
         Feedback::where('id',$id)->delete();
         return $this->index();
     }
@@ -64,6 +67,7 @@ class FeedbackController extends Controller
         return view('ManageFeedback\Lecturer\lectEditFeedback',['data'=>$q]);
     }
     public function statusFeedback($id, $status){
+       // dd($status);
         Feedback::where('id',$id)
         ->update([
             'status'=>$status
@@ -74,5 +78,13 @@ class FeedbackController extends Controller
             return view('ManageFeedback\Lecturer\lectEditFeedback',['data'=>$r]);
 
     }
-}
 
+    public function updateStatus(Request $request, $id){
+        $q = Feedback::findOrFail($id); // Find the feedback by ID or fail
+        $q->status = $request->input('status'); // Set the new status from the form
+        $q->answer = $request->input('answer'); // Set the reason from the form
+        $q->save(); // Save the changes to the database
+    
+        return redirect('/Lecturer/feedback')->with('success', 'Feedback status updated successfully!');
+    }
+}

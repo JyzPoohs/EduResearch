@@ -29,12 +29,12 @@
                                 >{{$q->status}}</td>
                             <td >
                                 <center>
-                                    <a class='btn  btn-animation waves-effect waves-light' href='{{ url("/viewFeedback", ["id" => $q->id]) }}'>
+                                    <a class='btn  btn-animation waves-effect waves-light' href='{{ url("/Student/viewFeedback", ["id" => $q->id]) }}'>
                                         <!-- <i class="ri-eye-line" style="color: green; font-size:20px;"></i> -->
                                         <i class="far fa-eye"></i>
                                     </a>
                                     @if ($q->status=='Pending')
-                                        <a type='button' class='btn  btn-animation waves-effect waves-light' href='{{ url("/Student/updateFeedbacks", $q->id) }}'>
+                                        <a type='button' class='btn  btn-animation waves-effect waves-light' href='{{ url("/Student/updateFeedbacks", ["id"=> $q->id]) }}'>
                                             <!-- <i class="ri-edit-line " style="color: black; font-size:20px;"></i> -->
                                             <i class="fa fa-pen"></i>
                                         </a>
@@ -130,7 +130,7 @@
                                             <h3><b>Delete The Feedback?</b></h3>
                                             <div class="row">
                                                 <div class="col">
-                                                    <a class='btn btn-danger' href='{{ url("/Student/deleteFeedback", ["id" => $q->id]) }}'  type='submit'>Yes</a>
+                                                    <a class='btn btn-danger' href='{{ url("deleteFeedback", ["id" => $q->id]) }}'  type='submit'>Yes</a>
                                                 </div>
                                                 <div class="col">
                                                     <button type="button" class="btn btn-info" data-bs-dismiss="modal">No</button>
