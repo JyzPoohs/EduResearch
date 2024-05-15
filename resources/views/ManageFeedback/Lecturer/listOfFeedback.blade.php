@@ -27,12 +27,12 @@
                                 >{{$q->status}}</td>
                             <td >
                                 <center>
-                                    <a class='btn  btn-animation waves-effect waves-light' href='{{ route('lec.viewFeedbackForm', ["id" => $q->id]) }}'>
+                                    <a class='btn  btn-animation waves-effect waves-light' href='{{ url('/Lecturer/viewFeedback', ["id" => $q->id]) }}'>
                                         <!-- <i class="ri-eye-line" style="color: green; font-size:20px;"></i> -->
                                         <i class="far fa-eye"></i>
                                     </a>
 
-                                         <a type='button' class='btn  btn-animation waves-effect waves-light' href='{{ route('lec.editFeedbackForm', ["id" => $q->id]) }}'>
+                                         <a type='button' class='btn  btn-animation waves-effect waves-light' href='{{ url('/Lecturer/editFeedback', ["id" => $q->id]) }}'>
                                             <!-- <i class="ri-edit-line " style="color: black; font-size:20px;"></i> -->
                                             <i class="fa fa-pen"></i>
                                          </a>
