@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             'doi' => '10.1145/3649405.3659504',
             'url' => 'https://doi.org/10.1145/3649405.3659504',
             'abstract' => 'Introducing students to new concepts in computer science can often be challenging, as these concepts may differ significantly from their existing knowledge and conceptual understanding. To address this, we employed analogies to help students connect new concepts to familiar ideas. Specifically, we generated analogies using large language models (LLMs), namely ChatGPT, and used them to help students make the necessary connections.',
-            'file' => 'File',
+            'file' => 'Null',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
             and facilitating proactive measures to enhance student performance. This paper discusses the
             methodology, dataset, and results of our study, highlighting the potential benefits and
             implications of utilizing machine learning in the domain of educational forecasting.',
-            'file' => 'File2',
+            'file' => '1715583512_research2.pdf',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -69,7 +69,7 @@ class DatabaseSeeder extends Seeder
             'doi' => '10.36560/17320241918',
             'url' => 'https://sea.ufr.edu.br/index.php/SEA/article/view/1918',
             'abstract' => 'Although the application of modern technologies in the education system of Serbia shows signs of progress in the last few years, it is still not at a satisfactory level. Hence the demands for improvement of learning methods and means are imposed.In order to determine to what extent each form of work is represented in the teaching of informatics and computer science, we conducted an interview with teachers of informatics and computer science in elementary schools in the territory of the cities of Belgrade and Novi Sad.',
-            'file' => 'File3',
+            'file' => '1715583977_research3.pdf',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
             'doi' => '10.1145/3649405.3659504',
             'url' => 'https://doi.org/10.1145/3649405.3659504',
             'abstract' => 'The COVID-19 pandemic has had a profound impact on the education system, prompting institutions worldwide to transition to online learning. This paper presents a case study of the transition to online learning in higher education, focusing on the challenges faced by students and educators, the strategies employed to facilitate the transition, and the outcomes of the transition. The study highlights the importance of effective communication, collaboration, and support in ensuring the success of online learning initiatives during times of crisis.',
-            'file' => 'File4',
+            'file' => 'Null',
             'created_at' => now(),
             'updated_at' => now()
         ]);

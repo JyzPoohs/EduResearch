@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mt-4">
         <div class="row mt-2">
-            @if (session()->has('success'))
+            @if (session()->has('success')|| session()->has('error'))
                 <div id="alert">
                     @include('ManagePublication.alert')
                 </div>
@@ -13,10 +13,8 @@
                     <h3 class="card-title">Upload Publication</h3>
                     <div class="text-center">
                         <form style="width: 800px; margin:auto" action={{ route('publications.store') }} class="form"
-                            method="post">
+                            method="post" enctype="multipart/form-data">
                             @csrf
-                            <input hidden type="text" class="form-control" id="publisher_id" name="publisher_id" required
-                                value="{{ Auth::user()->id }}">
                             <div class="form-group mb-3">
                                 <label for="title">Title</label>
                                 <input type="text" class="form-control" id="title" name="title" required
