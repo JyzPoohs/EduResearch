@@ -61,7 +61,7 @@
                                         <option value="student">Student</option>
                                         <option value="admin">Admin</option>
                                     </select>
-                                    @error('email')
+                                    @error('role')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
