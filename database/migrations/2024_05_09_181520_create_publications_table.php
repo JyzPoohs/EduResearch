@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('doi');
             $table->string('url');
             $table->text('abstract');
-            $table->string('file');
+            $table->string('file')->nullable();
             $table->timestamps();
         });
     }

@@ -14,7 +14,7 @@
     <div class="card text-center">
         <div class="card-body">
             <h3 class="card-title">View Publication</h3>
-            <div class="text-center" style="width: 800px; margin:auto">
+            <div class="text-center" style="width: 80%; margin:auto">
                 <div class="form-group mb-3">
                     <label for="title">Title</label>
                     <input disabled type="text" class="form-control" id="title" name="title"
@@ -68,11 +68,11 @@
                 <div class="form-group mb-3">
                     <label for="file">Publication File</label>
                     <p type="text" id="file" name="file">
-                        {{ $data->file ? $data->file : 'Publication File' }}</p>
-                    <a style="width: 500px" href="{{ route('publications.viewPDF', ['id' => $data->id]) }}"
-                        class="btn">View PDF</a>
+                        {{ $data->file ? $data->file : 'No File Found' }}</p>
+                    <a style="width: 80%" href="{{ route('publications.pdf', ['id' => $data->id]) }}"
+                        class="btn btn-view">View PDF</a>
                 </div>
-                <a class="btn btn-view" style="width: 700px" href="{{ route('publications-list') }}">Back</a>
+                <a class="btn btn-secondary" style="width: 70%" href="{{ route('publications-list') }}">Back</a>
             </div>
         </div>
     </div>

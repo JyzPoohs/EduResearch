@@ -11,6 +11,12 @@
         </div>
     </div>
     <div class="row">
+        <div class="row">
+            <div class="col-lg-9"></div>
+            <div class="col-lg-3">
+                <a href="{{ route('publications.create') }}" class="btn btn-view">Upload Publications</a>
+            </div>
+        </div>
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-body px-1 pt-0 pb-2">
@@ -62,7 +68,7 @@
                                                     class="btn btn-edit"><i class="fa fa-pen"></i></a>
                                                 <a href="{{ route('publications.destroy', ['id' => $data->id]) }}"
                                                     class="btn btn-danger"
-                                                    onclick="confirm('Confirm to delete this publication?')"><i
+                                                    onclick="return confirm('Confirm to delete this publication?')"><i
                                                         class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>

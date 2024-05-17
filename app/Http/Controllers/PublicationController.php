@@ -54,7 +54,7 @@ class PublicationController extends Controller
     {
         $data = Publication::find($id);
         $path = public_path('files/' . $data->file);
-        if (!file_exists($path)) {
+        if (!file_exists($path) || !is_readable($path) || $data->file == null) {
             return back()->with('error', 'PDF is Not Viewable/Available.');
         }
         return response()->file($path);
@@ -62,23 +62,29 @@ class PublicationController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'author' => 'required',
-            'type' => 'required',
-            'date' => 'required',
-            'keywords' => 'required',
-            'doi' => 'required',
-            'url' => 'required',
-            'abstract' => 'required',
-            'file' => 'nullable|mimes:pdf|max:2048',
-        ]);
+        $request->validate(
+            [
+                'title' => 'required|max:255',
+                'author' => 'required',
+                'type' => 'required',
+                'date' => 'required|date',
+                'keywords' => 'required|max:255',
+                'doi' => 'required',
+                'url' => 'required',
+                'abstract' => 'required',
+                'file' => 'nullable|mimes:pdf|max:30000',
+            ],
+            [
+                'type.required' => 'The publication type must be selected',
+                'file.max' => 'The file may not be greater than 30MB.',
+            ]
+        );
 
-        if($request->hasFile('file')){
+        if ($request->hasFile('file')) {
             $file = $request->file('file');
             $fileName = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('files'), $fileName);
-        }else{
+        } else {
             $fileName = null;
         }
 
@@ -103,29 +109,29 @@ class PublicationController extends Controller
     {
         $publication = Publication::find($id);
         $request->validate([
-            'title' => 'required',
+            'title' => 'required|max:255',
             'author' => 'required',
             'type' => 'required',
             'date' => 'required',
-            'keywords' => 'required',
+            'keywords' => 'required|max:255',
             'doi' => 'required',
             'url' => 'required',
             'abstract' => 'required',
             'file' => 'nullable|mimes:pdf|max:2048',
         ]);
 
-        if($request->hasFile('file')){
+        if ($request->hasFile('file')) {
             $file = $request->file('file');
             $fileName = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('files'), $fileName);
 
-            if(File::exists($publication->file)){
+            if (File::exists($publication->file)) {
                 File::delete(public_path('files/' . $publication->file));
             }
-        }else{
+        } else {
             $fileName = null;
         }
-        
+
         $publication->update([
             'title' => $request->title,
             'author' => $request->author,
@@ -136,7 +142,7 @@ class PublicationController extends Controller
             'url' => $request->url,
             'abstract' => $request->abstract,
             'file' => $fileName,
-        
+
         ]);
 
         return redirect()->route('publications-list')
@@ -150,6 +156,4 @@ class PublicationController extends Controller
         return redirect()->route('publications-list')
             ->with('success', 'Publication deleted successfully');
     }
-
-   
 }

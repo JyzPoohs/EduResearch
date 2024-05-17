@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class
         ]);
+        $this->feedback();
+
 
         DB::table('publications')->insert([
             'id' => 1,
@@ -89,8 +91,11 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+    }
 
-        DB::table('feedback')->insert([
+    public function feedback()
+    {
+        $datas = [
             [
                 'id' => 1,
                 'name' => 'dinish',
@@ -111,7 +116,6 @@ class DatabaseSeeder extends Seeder
                 'status' => 'Approved',
                 'created_at' => now(),
                 'updated_at' => now(),
-                'deleted_at' => 'NULL',
             ],
             [
                 'id' => 3,
@@ -133,7 +137,6 @@ class DatabaseSeeder extends Seeder
                 'status' => 'Approved',
                 'created_at' => now(),
                 'updated_at' => now(),
-                'deleted_at' => 'NULL',
             ],
             [
                 'id' => 5,
@@ -155,30 +158,11 @@ class DatabaseSeeder extends Seeder
                 'status' => 'Approved',
                 'created_at' => now(),
                 'updated_at' => now(),
-                'deleted_at' => 'NULL',
-            ],
-            [
-                'id' => 7,
-                'name' => 'yohan',
-                'noKp' => '991215067826',
-                'explain' => 'could the publication be done without lecturer?',
-                'answer' => 'sorry that cant be done',
-                'status' => 'Rejected',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'deleted_at' => now(),
-            ],
-            [
-                'id' => 8,
-                'name' => 'Yap',
-                'noKp' => '990514078896',
-                'explain' => 'received relevant information from the publication',
-                'answer' => 'thank you',
-                'status' => 'Approved',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'deleted_at' => 'NULL',
-            ],
-        ]);        
+            ]
+        ];
+
+        foreach ($datas as $data) {
+            DB::table('feedback')->insert($data);
+        }
     }
 }

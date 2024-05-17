@@ -15,7 +15,7 @@
             <div class="card-body">
                 <h3 class="card-title">{{ $data->title ? $data->title : 'Publication Title' }}</h3>
                 <div>
-                    <p>{{ $data->date ? $data->date : 'Published Date' }}</p>
+                    <p class="mt-4">{{ $data->date ? $data->date : 'Published Date' }}</p>
                 </div>
                 <div>
                     <p>Author(s): {{ $data->author ? $data->author : 'Author(s) Name' }}</p>
@@ -29,11 +29,16 @@
                     <p>{{ $data->abstract ? $data->abstract : 'Publication Abstract' }}</p>
                 </div>
                 <div>
-                    <p><strong>Full-text PDF:</strong> {{$data->file}}</p>
+                    <p><strong>Full-text PDF:</strong> {{ $data->file? $data->file : "No file found" }}</p>
                 </div>
                 <div>
-                    <a href="{{ route('publications.viewPDF', ['id' => $data->id]) }}" class="btn btn-view" href="">View
-                        full-text pdf</a>
+                    @if ($data->file)
+                        <a href="{{ route('publications.pdf', ['id' => $data->id]) }}" class="btn btn-view">View
+                            full-text pdf</a>
+                    @else
+                        <button disabled class="btn btn-view">PDF Not Available</button>
+                    @endif
+
                     <a class="btn btn-secondary" href="{{ route('home') }}">Back</a>
                 </div>
             </div>

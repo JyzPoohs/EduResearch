@@ -2,13 +2,11 @@
 
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\FeedbackController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
-use App\Models\Feedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -24,24 +22,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/view-publication/{id}', [PublicationController::class, 'show'])->name('publications.show');
 	Route::get('/edit-publication/{id}', [PublicationController::class, 'edit'])->name('publications.edit');
 	Route::put('/update-publication/{id}', [PublicationController::class, 'update'])->name('publications.update');
-
+	Route::get('/view-pdf/{id}', [PublicationController::class, 'pdf'])->name('publications.pdf');
 	Route::get('/delete-publication/{id}', [PublicationController::class, 'destroy'])->name('publications.destroy');
-
-	Route::get('billing', function () {
-		return view('billing');
-	})->name('billing');
-
-	Route::get('profile', function () {
-		return view('profile');
-	})->name('profile');
-
-	Route::get('user-management', function () {
-		return view('laravel-examples/user-management');
-	})->name('user-management');
-
-	Route::get('tables', function () {
-		return view('tables');
-	})->name('tables');
 
     Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/user-profile', [InfoUserController::class, 'create']);
@@ -68,6 +50,10 @@ Route::group(['middleware' => 'guest'], function () {
 Route::get('/login', function () {
     return view('session/login-session');
 })->name('login');
+
+Route::get('/', function () {
+    return view('session/login-session');
+});
 
 
 

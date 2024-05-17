@@ -17,7 +17,7 @@
         </div>
         <div class="col-lg-3">
             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'lecturer')
-                <a href="{{ route('publications.create') }}" class="btn btn-primary">Upload Publications</a>
+                <a href="{{ route('publications.create') }}" class="btn btn-view">Upload Publications</a>
             @endif
         </div>
     </div>
@@ -31,7 +31,7 @@
             @if ($count % 3 == 0)
                 <div class="row mt-4">
             @endif
-            <div class="col-lg-4">
+            <div class="col-lg-4 mb-2">
                 <div class="card h-100 p-3">
                     <div class="overflow-hidden position-relative border-radius-lg bg-cover h-100">
                         <div class="card-body position-relative z-index-1 d-flex flex-column h-100 p-3">
