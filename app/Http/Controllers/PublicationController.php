@@ -7,6 +7,7 @@ use App\Models\Publication;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class PublicationController extends Controller
 {
@@ -79,15 +80,28 @@ class PublicationController extends Controller
                 'file.max' => 'The file may not be greater than 30MB.',
             ]
         );
-
+    
+        $directoryPath = public_path('files');
+    
+        // Check if the directory exists, if not, create it
+        if (!File::exists($directoryPath)) {
+            File::makeDirectory($directoryPath, 0755, true);
+        }
+    
+        $fileName = null;
+    
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('files'), $fileName);
-        } else {
-            $fileName = null;
+        
+            try {
+                $file->move($directoryPath, $fileName);
+            } catch (\Exception $e) {
+                Log::error('File move error: ' . $e->getMessage());
+                return back()->with('error', 'File upload failed. Please try again.');
+            }
         }
-
+        
         Publication::create([
             'publisher_id' => Auth::user()->id,
             'title' => $request->title,
@@ -100,10 +114,11 @@ class PublicationController extends Controller
             'abstract' => $request->abstract,
             'file' => $fileName,
         ]);
-
+    
         return redirect()->route('publications-list')
             ->with('success', 'Publication added successfully.');
     }
+    
 
     public function update(Request $request, $id)
     {
