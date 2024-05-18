@@ -85,6 +85,6 @@ class FeedbackController extends Controller
         $q->answer = $request->input('answer'); // Set the reason from the form
         $q->save(); // Save the changes to the database
     
-        return redirect('.Lecturer.feedback')->with('success', 'Feedback status updated successfully!');
+        return redirect('/Lecturer/feedback')->with('success', 'Feedback status updated successfully!');
     }
 }
