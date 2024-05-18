@@ -10,12 +10,12 @@ class FeedbackController extends Controller
     
     public function index(){
         $q=Feedback::get();
-        return view('ManageFeedback\Student\listOfFeedback',['data'=>$q]);
+        return view('ManageFeedback.Student.listOfFeedback',['data'=>$q]);
     }
     public function viewFeedback($id){
         $q=Feedback::where('id',$id)
         ->first();
-        return view('ManageFeedback\Student\viewFeedback',['data'=>$q]);
+        return view('ManageFeedback.Student.viewFeedback',['data'=>$q]);
     }
     public function updateFeedbacks($id){
         $data=Feedback::where('id',$id)
@@ -26,7 +26,7 @@ class FeedbackController extends Controller
     }
 
     public function newApplication(){
-        return view('ManageFeedback\Student\newApplication');
+        return view('ManageFeedback.Student.newApplication');
     }
     public function addFeedback(Request $request){
         Feedback::create([
@@ -54,17 +54,17 @@ class FeedbackController extends Controller
 
     public function LecturerFeedback(){
         $q=Feedback::get();
-        return view('ManageFeedback\Lecturer\listOfFeedback',['data'=>$q]);
+        return view('ManageFeedback.Lecturer.listOfFeedback',['data'=>$q]);
     }
     public function LecturerViewFeedback($id){
         $q=Feedback::where('id',$id)
         ->first();
-        return view('ManageFeedback\Lecturer\lectViewFeedback',['data'=>$q]);
+        return view('ManageFeedback.Lecturer.lectViewFeedback',['data'=>$q]);
     }
     public function LecturerEditFeedback($id){
         $q=Feedback::where('id',$id)
         ->first();
-        return view('ManageFeedback\Lecturer\lectEditFeedback',['data'=>$q]);
+        return view('ManageFeedback.Lecturer.lectEditFeedback',['data'=>$q]);
     }
     public function statusFeedback($id, $status){
        // dd($status);
@@ -75,7 +75,7 @@ class FeedbackController extends Controller
 
             $r=Feedback::where('id',$id)
             ->first();
-            return view('ManageFeedback\Lecturer\lectEditFeedback',['data'=>$r]);
+            return view('ManageFeedback.Lecturer.lectEditFeedback',['data'=>$r]);
 
     }
 
@@ -85,6 +85,6 @@ class FeedbackController extends Controller
         $q->answer = $request->input('answer'); // Set the reason from the form
         $q->save(); // Save the changes to the database
     
-        return redirect('/Lecturer/feedback')->with('success', 'Feedback status updated successfully!');
+        return redirect('ManageFeedback.Lecturer.feedback')->with('success', 'Feedback status updated successfully!');
     }
 }
