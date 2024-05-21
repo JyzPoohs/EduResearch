@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Publication;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\Http;
 
 class PublicationController extends Controller
 {
@@ -24,7 +25,6 @@ class PublicationController extends Controller
         } elseif (Auth::user()->role == 'lecturer') {
             $datas = Publication::where('publisher_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
         }
-        //dd($datas);
         return view('ManagePublication.index', compact('datas'));
     }
 
@@ -51,14 +51,35 @@ class PublicationController extends Controller
         return view('ManagePublication.edit', compact('data'));
     }
 
+    private function fetchAndReturnPdf(Publication $publication)
+    {
+        $response = Http::get($publication->file);
+
+        if ($response->status() == 200) {
+            return response($response->body(), 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $publication->file . '"',
+            ]);
+        } else {
+            return back()->with('error', 'Failed to retrieve PDF from external URL.');
+        }
+    }
+
     public function pdf($id)
     {
         $data = Publication::find($id);
-        $path = public_path('files/' . $data->file);
-        if (!file_exists($path) || !is_readable($path) || $data->file == null) {
+        if (!$data || !$data->file) {
             return back()->with('error', 'PDF is Not Viewable/Available.');
         }
-        return response()->file($path);
+
+        if (File::exists(public_path('files/' . $data->file))) {
+            return response()->file(public_path('files/' . $data->file), [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $data->file . '"',
+            ]);
+        } elseif (strpos($data->file, 'https') === 0) {
+            return $this->fetchAndReturnPdf($data);
+        }
     }
 
     public function store(Request $request)
@@ -81,24 +102,21 @@ class PublicationController extends Controller
             ]
         );
 
+        $uploadedFileUrl = null;
         $directoryPath = public_path('files');
 
-        // Check if the directory exists, if not, create it
         if (!File::exists($directoryPath)) {
             File::makeDirectory($directoryPath, 0755, true);
         }
 
-        $fileName = null;
-
         if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-
             try {
-                $file->move($directoryPath, $fileName);
+                $fileName = time() . '_' . $request->file('file')->getClientOriginalName();
+                $uploadedFileUrl = Cloudinary::uploadFile($request->file('file')->getRealPath(), ['public_id' => $fileName])->getSecurePath();
+                $request->file('file')->move($directoryPath, $fileName);
             } catch (\Exception $e) {
                 Log::error('File move error: ' . $e->getMessage());
-                return back()->with('error', 'File upload failed. Please try again.');
+                return back()->with('error', $e->getMessage());
             }
         }
 
@@ -112,13 +130,12 @@ class PublicationController extends Controller
             'doi' => $request->doi,
             'url' => $request->url,
             'abstract' => $request->abstract,
-            'file' => $fileName,
+            'file' => $uploadedFileUrl,
         ]);
 
         return redirect()->route('publications-list')
             ->with('success', 'Publication added successfully.');
     }
-
 
     public function update(Request $request, $id)
     {

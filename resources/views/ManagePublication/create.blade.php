@@ -8,6 +8,11 @@
                     @include('ManagePublication.alert')
                 </div>
             @endif
+            @if (session()->has('message'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <p class="text-white mb-0">{{ session()->get('message') }}</p>
+            </div>
+            @endif
             <div class="card text-center">
                 <div class="card-body">
                     <h3 class="card-title">Upload Publication</h3>
