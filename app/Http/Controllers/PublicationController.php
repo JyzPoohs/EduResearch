@@ -61,7 +61,7 @@ class PublicationController extends Controller
                 'Content-Disposition' => 'inline; filename="' . $publication->file . '"',
             ]);
         } else {
-            return back()->with('error', 'Failed to retrieve PDF from external URL.');
+            return back()->with('error', 'Failed to retrieve PDF. Please try again later');
         }
     }
 
@@ -113,7 +113,7 @@ class PublicationController extends Controller
             try {
                 $fileName = time() . '_' . $request->file('file')->getClientOriginalName();
                 $uploadedFileUrl = Cloudinary::uploadFile($request->file('file')->getRealPath(), ['public_id' => $fileName])->getSecurePath();
-                $request->file('file')->move($directoryPath, $fileName);
+                //$request->file('file')->move($directoryPath, $fileName);
             } catch (\Exception $e) {
                 Log::error('File move error: ' . $e->getMessage());
                 return back()->with('error', $e->getMessage());
@@ -150,24 +150,23 @@ class PublicationController extends Controller
             'doi' => 'required',
             'url' => 'required',
             'abstract' => 'required',
-            'file' => 'nullable|mimes:pdf|max:2048',
+            'file' => 'nullable|mimes:pdf|max:30000',
         ]);
 
         $directoryPath = public_path('files');
 
-        // Check if the directory exists, if not, create it
         if (!File::exists($directoryPath)) {
             File::makeDirectory($directoryPath, 0755, true);
         }
 
-        $fileName = $publication->file; // Keep the existing file if no new file is uploaded
+        $fileName = $publication->file; 
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $fileName = time() . '_' . $file->getClientOriginalName();
 
             try {
-                $file->move($directoryPath, $fileName);
+                $uploadedFileUrl = Cloudinary::uploadFile($request->file('file')->getRealPath(), ['public_id' => $fileName])->getSecurePath();
 
                 // Delete old file if it exists
                 if ($publication->file && File::exists($directoryPath . '/' . $publication->file)) {
@@ -188,7 +187,7 @@ class PublicationController extends Controller
             'doi' => $request->doi,
             'url' => $request->url,
             'abstract' => $request->abstract,
-            'file' => $fileName,
+            'file' => $uploadedFileUrl,
         ]);
 
         return redirect()->route('publications-list')
