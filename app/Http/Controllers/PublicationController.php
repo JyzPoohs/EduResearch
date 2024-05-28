@@ -94,11 +94,11 @@ class PublicationController extends Controller
                 'doi' => 'required',
                 'url' => 'required',
                 'abstract' => 'required',
-                'file' => 'nullable|mimes:pdf|max:30000',
+                'file' => 'nullable|mimes:pdf|max:1024',
             ],
             [
                 'type.required' => 'The publication type must be selected',
-                'file.max' => 'The file may not be greater than 30MB.',
+                'file.max' => 'The file may not be greater than 1024KB.',
             ]
         );
 
@@ -141,17 +141,23 @@ class PublicationController extends Controller
     {
         $publication = Publication::findOrFail($id);
 
-        $request->validate([
-            'title' => 'required|max:255',
-            'author' => 'required',
-            'type' => 'required',
-            'date' => 'required',
-            'keywords' => 'required|max:255',
-            'doi' => 'required',
-            'url' => 'required',
-            'abstract' => 'required',
-            'file' => 'nullable|mimes:pdf|max:30000',
-        ]);
+        $request->validate(
+            [
+                'title' => 'required|max:255',
+                'author' => 'required',
+                'type' => 'required',
+                'date' => 'required',
+                'keywords' => 'required|max:255',
+                'doi' => 'required',
+                'url' => 'required',
+                'abstract' => 'required',
+                'file' => 'nullable|mimes:pdf|max:1024',
+            ],
+            [
+                'type.required' => 'The publication type must be selected',
+                'file.max' => 'The file may not be greater than 1024KB.',
+            ]
+        );
 
         $directoryPath = public_path('files');
 
@@ -159,7 +165,7 @@ class PublicationController extends Controller
             File::makeDirectory($directoryPath, 0755, true);
         }
 
-        $fileName = $publication->file; 
+        $fileName = $publication->file;
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
@@ -187,7 +193,7 @@ class PublicationController extends Controller
             'doi' => $request->doi,
             'url' => $request->url,
             'abstract' => $request->abstract,
-            'file' => $uploadedFileUrl,
+            'file' => $uploadedFileUrl ?? $fileName,
         ]);
 
         return redirect()->route('publications-list')

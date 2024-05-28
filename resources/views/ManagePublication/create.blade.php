@@ -90,7 +90,7 @@
                                 <label for="doi">DOI</label>
                                 <input type="text" class="form-control @error('doi') is-invalid @enderror" id="doi"
                                     name="doi" required value="{{ old('doi') }}"
-                                    placeholder="eg. 10.1016/j.cscm.2024.e02863 or NA">
+                                    placeholder="eg. NA or 10.1016/j.cscm.2024.e02863">
                                 @error('doi')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -101,7 +101,7 @@
                                 <label for="url">URL</label>
                                 <input type="text" class="form-control @error('url') is-invalid @enderror" id="url"
                                     name="url" required value="{{ old('url') }}"
-                                    placeholder="eg. https://doi.org/10.1016/j.cscm.2024.e02863 or NA">
+                                    placeholder="eg. NA or https://doi.org/10.1016/j.cscm.2024.e02863">
                                 @error('url')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -119,7 +119,7 @@
                                 @enderror
                             </div>
                             <div class="form-group mb-3">
-                                <label for="file">Publication PDF File</label>
+                                <label for="file">Publication PDF File (Max 1024KB)</label>
                                 <p class="text-center text-sm font-weight-light font-italic">You may upload the PDF file later</p>
                                 <input type="file" class="form-control @error('file') is-invalid @enderror"
                                     id="file" name="file">
