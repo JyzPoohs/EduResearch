@@ -7,6 +7,9 @@ use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +54,19 @@ Route::get('/', function () {
 });
 
 
+//Manage Event module
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/add-event', [EventController::class, 'create'])->name('events.create');
+Route::post('/add-event', [EventController::class, 'store'])->name('events.store');
+Route::get('/events/{id}', [EventController::class, 'view'])->name('events.view');
+Route::get('/view-event/{id}', [EventController::class, 'show'])->name('events.show');
+Route::get('/edit-event/{id}', [EventController::class, 'edit'])->name('events.edit');
+Route::put('/update-event/{id}', [EventController::class, 'update'])->name('events.update');
+Route::get('/delete-event/{id}', [EventController::class, 'destroy'])->name('events.destroy');
+Route::post('/events/{id}/register', [EventController::class, 'register'])->name('events.register');
+Route::get('/events/{id}/registrations', [EventController::class, 'viewRegistrations'])->name('events.viewRegistrations');
+
+Route::middleware(['auth', 'can:viewDashboard'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 //complaint module
 Route::get('/feedbacklist', [FeedbackController::class, 'index'])->name('feedbacklist');

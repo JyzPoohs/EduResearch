@@ -22,7 +22,7 @@ class RegisterController extends Controller
             'phone' => ['required', 'numeric'],
             'role' => ['required'],
             'email' => ['required', 'email', 'max:50', Rule::unique('users', 'email')],
-            'password' => ['required', 'min:5', 'max:20'],
+            'password' => ['requ ired', 'min:5', 'max:20'],
         ]);
         $request['password'] = bcrypt($request['password']);
 

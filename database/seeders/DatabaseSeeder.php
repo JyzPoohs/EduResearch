@@ -91,6 +91,42 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+
+        //event
+        DB::table('events')->insert([
+            'id' => 2,
+            'user_id' => 2,
+            'title' => 'Unveiling Modern Strategies for Software Reliability',
+            'organizer' => 'Petakom',
+            'venue' => 'DKU1',
+            'date' => '2024-06-20',
+            'description' => 'Exposure on testing in containerization CICD ecosytem. We invited Mr. Saiful Zahrin Bin Azmuddin from Rekamy Sdn Bhd for the sharing session. Join us at 12 p.m until 2 p.m',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('events')->insert([
+            'id' => 3,
+            'user_id' => 2,
+            'title' => 'UMPSA Career Pit Stop 2024',
+            'organizer' => 'Pusat Kerjaya',
+            'venue' => 'Dewan Astaka, UMPSA Gambang',
+            'date' => '2024-06-10',
+            'description' => 'This is your chance to gain knowledge for your future career! Informative industrial talk by special guest, and open interview is offered! Do not miss the chance and join now! We will be there at 9 a.m until 4 p.m',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        DB::table('events')->insert([
+            'id' => 4,
+            'user_id' => 3,
+            'title' => 'The Future of Work: Strategies for Surviving the Job Market',
+            'organizer' => 'Petakom',
+            'venue' => 'Astaka, Faculty of Computing',
+            'date' => '2024-06-01',
+            'description' => 'Join the career talk with Mohd Yashim Wong, a special guest from Deriv Services, Cyberjaya. The event will start at 10 a.m until 12 p.m',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 
     public function feedback()
